@@ -1,9 +1,11 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
+using System.Collections.Generic;
 using CsvHelper.TypeConversion;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace arquivocsv
 {
@@ -31,10 +33,8 @@ namespace arquivocsv
             Map(m => m.DataPromessa).Name("DATA_PROMESSA");
             Map(m => m.HoraPromessa).Name("HORA_PROMESSA");
             Map(m => m.MatriculaAtendente).Name("MATRICULA_ATENDENTE");
-            Map(m => m.CodigoInsapoio).Name("CODIGO_INSAPOIO");   
-
-            Map(m => m.DescricaoInsapoio).Name("DESCRICAO_INSAPOIO").Ignore();
-            
+            Map(m => m.CodigoInsapoio).Name("CODIGO_INSAPOIO");
+            Map(m => m.DescricaoInsapoio).Name("DESCRICAO_INSAPOIO");
             Map(m => m.Localidades).Name("LOCALIDADES");
             Map(m => m.UnidadeNegocio).Name("UNIDADE_NEGOCIO");
             Map(m => m.DescricaoRelacionamento).Name("DESCRICAO_RELACIONAMENTO");
