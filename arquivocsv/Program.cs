@@ -5,14 +5,17 @@ using CsvHelper.Configuration;
 using System.Globalization;
 
 
-List<Arquivo> arquivoB = LerArquivoA();
+//List<Arquivo> arquivoB = LerArquivoA();
 
-foreach (var item in arquivoB)
-{
-    Console.WriteLine($" chave: {item.SiglaUF} ({item.DDD}){item.NumeroTerminal}  protocolo : {item.DDD}{item.NumeroTerminal}{item.Registro}{item.MatriculaAtendente}");
-}
+//foreach (var item in arquivoB)
+//{
+//    Console.WriteLine($" chave: {item.SiglaUF}-{item.DDD}{item.NumeroTerminal}  protocolo : {item.DDD}{item.NumeroTerminal}{item.Registro}{item.MatriculaAtendente}");
+//}
 
-Console.WriteLine(arquivoB.Count);
+//Console.WriteLine(arquivoB.Count);
+
+
+var arqivoWll = LerArquivoWll();
 
 
 List<Arquivo>? LerArquivoA()
@@ -83,7 +86,7 @@ object LerArquivoWll()
 
             foreach (var item in listaArquivo)
             {
-                Console.WriteLine($"chave: {item.Cidade} ");
+                Console.WriteLine($"chave: {item.UF}-{item.Terminal}  datastatus: {item.DataStatus} ");
             }
 
             Console.WriteLine(listaArquivo.Count);
