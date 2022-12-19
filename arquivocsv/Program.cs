@@ -3,20 +3,45 @@ using arquivocsv;
 using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
+using System.Linq;
+
+List<Arquivo> arquivoB = LerArquivoA();
+List<ArquivoWll> arquivoWll = LerArquivoWll();
+
+/*
+foreach (var item in arquivoB)
+{
+    Console.WriteLine($" chave: {item.SiglaUF}-{item.DDD}{item.NumeroTerminal}  protocolo : {item.DDD}{item.NumeroTerminal}{item.Registro}{item.MatriculaAtendente}");
+}
+
+Console.WriteLine($"quantidade: {arquivoB.Count}");
 
 
-//List<Arquivo> arquivoB = LerArquivoA();
+foreach (var item in arquivoWll)
+{
+    Console.WriteLine($"chave: {item.UF}-{item.Terminal}  datastatus: {item.DataStatus} nome: {item.Cliente}");
+}
 
-//foreach (var item in arquivoB)
-//{
-//    Console.WriteLine($" chave: {item.SiglaUF}-{item.DDD}{item.NumeroTerminal}  protocolo : {item.DDD}{item.NumeroTerminal}{item.Registro}{item.MatriculaAtendente}");
-//}
-
-//Console.WriteLine(arquivoB.Count);
+Console.WriteLine($"quantidade: {arquivoWll.Count}");
+*/
 
 
-var arqivoWll = LerArquivoWll();
+var result = arquivoB
+            .Join(arquivoWll,
+                arquivoB => (arquivoB.SiglaUF + "-" + arquivoB.DDD + arquivoB.NumeroTerminal), arquivoWll => arquivoWll.UF + "-" + arquivoWll.Terminal,
+                (arquivoB, arquivoWll) => new { ArquivoB = arquivoB, ArquivoWll = arquivoWll })
+            .Select(a => new
+            {
+                Status = a.ArquivoB.Status,
+                Chave = a.ArquivoB.SiglaUF + "-" + a.ArquivoB.DDD + a.ArquivoB.NumeroTerminal,
+                Protrocolo = a.ArquivoB.DDD + a.ArquivoB.NumeroTerminal + a.ArquivoB.Registro + a.ArquivoB.MatriculaAtendente,
+                Nome = a.ArquivoWll.Cliente
+            }).ToList();
 
+foreach (var item in result)
+{
+    Console.WriteLine($"status: {item.Status} chave: {item.Chave} protocolo: {item.Protrocolo} nome: {item.Nome}");
+}
 
 List<Arquivo>? LerArquivoA()
 {
@@ -60,7 +85,7 @@ List<Arquivo>? LerArquivoA()
 }
 
 
-object LerArquivoWll()
+List<ArquivoWll>? LerArquivoWll()
 {
     string filePath = @"D:/DEV/AFotoGit/teste/wll-R1-2022-12-06-completo.csv";
 
@@ -79,25 +104,15 @@ object LerArquivoWll()
                 line = line.Replace("\"", "");
 
                 listaArquivo.Add(line);
-
-            }
-
-            //return listaArquivo;
-
-            foreach (var item in listaArquivo)
-            {
-                Console.WriteLine($"chave: {item.UF}-{item.Terminal}  datastatus: {item.DataStatus} ");
-            }
-
-            Console.WriteLine(listaArquivo.Count);
+            }            
         }
 
-        return listaArquivo.Count;
+        return listaArquivo;
 
     }
-    catch (Exception ex)
+    catch (Exception)
     {
-        return $"erro: {ex.Message}";
+        return null;
     }
 }
 

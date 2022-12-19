@@ -1,11 +1,4 @@
-﻿using CsvHelper;
-using CsvHelper.Configuration;
-using System.Collections.Generic;
-using CsvHelper.TypeConversion;
-using System.Text.Json.Nodes;
-using System.Text.Json;
-using System.Text.RegularExpressions;
-using System.Diagnostics;
+﻿using CsvHelper.Configuration;
 
 namespace arquivocsv
 {
