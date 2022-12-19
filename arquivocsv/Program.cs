@@ -5,9 +5,17 @@ using CsvHelper.Configuration;
 using System.Globalization;
 
 
-var arquivoB = LerArquivoA();
+List<Arquivo> arquivoB = LerArquivoA();
 
-object LerArquivoA()
+foreach (var item in arquivoB)
+{
+    Console.WriteLine($" chave: {item.SiglaUF} ({item.DDD}){item.NumeroTerminal}  protocolo : {item.DDD}{item.NumeroTerminal}{item.Registro}{item.MatriculaAtendente}");
+}
+
+Console.WriteLine(arquivoB.Count);
+
+
+List<Arquivo>? LerArquivoA()
 {
     string filePath = @"D:/DEV/AFotoGit/teste/BIO_1067_422312_ROP_OI_FIXO_RELATORIO_ANALITICO_INSAPOIO_20220501_20220530_062823.txt";
 
@@ -17,33 +25,82 @@ object LerArquivoA()
 
         using (StreamReader reader = new StreamReader(filePath))
         {
-            reader.ReadLine(); // sai da primeira linha
+            reader.ReadLine(); //sai da primeira linha
 
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                listaArquivo.Add(line.Replace("\"",""));            
+                line = line + ";chave";
+                line = line.Replace("\"", "");
+
+                listaArquivo.Add(line);
             }
+            
+            //retorna objeto filtrado
+            return listaArquivo.Where(x =>
+                x.Status != "FECHADA" &&
+                (
+                    x.CodigoInsapoio == "106" ||
+                    x.CodigoInsapoio == "107" ||
+                    x.CodigoInsapoio == "108" ||
+                    x.CodigoInsapoio == "109" ||
+                    x.CodigoInsapoio == "110" ||
+                    x.CodigoInsapoio == "111" ||
+                    x.CodigoInsapoio == "121"
+                )).ToList();
+        }
+    }
+    catch (Exception)
+    {
+        return null;
+    }
+}
+
+
+object LerArquivoWll()
+{
+    string filePath = @"D:/DEV/AFotoGit/teste/wll-R1-2022-12-06-completo.csv";
+
+    try
+    {
+        List<ArquivoWll> listaArquivo = new List<ArquivoWll>();
+
+        using (StreamReader reader = new StreamReader(filePath))
+        {
+            reader.ReadLine(); //sai da primeira linha
+
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                //line = line + ";chave";
+                line = line.Replace("\"", "");
+
+                listaArquivo.Add(line);
+
+            }
+
+            //return listaArquivo;
 
             foreach (var item in listaArquivo)
             {
-              Console.WriteLine($"nome: {item.DescricaoInsapoio}");
+                Console.WriteLine($"chave: {item.Cidade} ");
             }
 
             Console.WriteLine(listaArquivo.Count);
         }
 
-        return listaArquivo;
+        return listaArquivo.Count;
 
     }
     catch (Exception ex)
-    {        
-        return ex.Message;
-    }    
+    {
+        return $"erro: {ex.Message}";
+    }
 }
 
 
-object LerArquivoB()
+
+object LerArquivoBugado()
 {
     try
     {
@@ -71,7 +128,7 @@ object LerArquivoB()
             arquivos = csv.GetRecords<ArquivoA>().ToList();
 
             foreach (var arquivo in arquivos)
-                Console.WriteLine($"primeiro: {arquivo.CodStatus}, segundo: {arquivo.CPFCliente} uai: {arquivo.DescricaoInsapoio}");
+                Console.WriteLine($"chave {arquivo.DDD}");
         }
 
         //using (var writer = new StreamWriter("testeFile.csv"))

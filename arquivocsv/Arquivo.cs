@@ -95,8 +95,10 @@ namespace arquivocsv
 
         [Name("COD_LOCALIDADE")]
         public string CodLocalidade { get; set; }
+        [Name("CHAVE")]
+        public string Chave { get; set; }
 
-        public Arquivo(string dataReferencia, string status, string codStatus, string geografia, string siglaUF, string siglaGAA, string siglaGRAM, string siglaGRA, string estacao, string dDD, string numeroTerminal, string registro, string dataAbertura, string horaAbertura, string prazo, string dataFechamento, string horaFechamento, string dataPromessa, string horaPromessa, string matriculaAtendente, string codigoInsapoio, string descricaoInsapoio, string localidades, string unidadeNegocio, string descricaoRelacionamento, string nRCCliente, string cPFCliente, string campoObservacao, string codLocalidade)
+        public Arquivo(string dataReferencia, string status, string codStatus, string geografia, string siglaUF, string siglaGAA, string siglaGRAM, string siglaGRA, string estacao, string dDD, string numeroTerminal, string registro, string dataAbertura, string horaAbertura, string prazo, string dataFechamento, string horaFechamento, string dataPromessa, string horaPromessa, string matriculaAtendente, string codigoInsapoio, string descricaoInsapoio, string localidades, string unidadeNegocio, string descricaoRelacionamento, string nRCCliente, string cPFCliente, string campoObservacao, string codLocalidade, string chave)
         {
             DataReferencia = dataReferencia;
             Status = status;
@@ -127,6 +129,7 @@ namespace arquivocsv
             CPFCliente = cPFCliente;
             CampoObservacao = campoObservacao;
             CodLocalidade = codLocalidade;
+            Chave = chave;
         }
 
         public static implicit operator Arquivo(string line)
@@ -161,7 +164,8 @@ namespace arquivocsv
                 data[25],
                 data[26],
                 data[27],
-                data[28]
+                data[28],
+                data[29]
             );
         }
     }
