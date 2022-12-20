@@ -1,6 +1,6 @@
 ﻿using CsvHelper.Configuration.Attributes;
 
-namespace arquivocsv
+namespace arquivocsv.Classes
 {
     public class ArquivoA
     {
