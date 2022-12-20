@@ -1,18 +1,14 @@
 ﻿using arquivocsv.Classes;
 using CsvHelper.Configuration;
 using CsvHelper;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.NetworkInformation;
 
 namespace arquivocsv
 {
     public class LerArquivo
     {
-        public static List<Arquivo>? LerArquivoA(string filePath)
+        public static List<Arquivo> LerArquivoA(string filePath)
         {            
             try
             {
@@ -51,7 +47,7 @@ namespace arquivocsv
             }
         }
 
-        public static List<ArquivoWll>? LerArquivoWll(string filePath)
+        public static List<ArquivoWll> LerArquivoWll(string filePath)
         {
             try
             {
@@ -126,10 +122,7 @@ namespace arquivocsv
             catch (Exception ex)
             {
                 Console.WriteLine($"erro foi: {ex.Message}"); ;
-            }
-
-            return "";
+            }            
         }
-
     }
 }
